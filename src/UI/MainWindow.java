@@ -1,3 +1,5 @@
+package UI;
+
 import Interfaces.IAfisaj_microunde;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,7 +12,7 @@ public class MainWindow extends Frame implements IAfisaj_microunde {
 
     private Microunde microunde;
 
-    MainWindow() {
+    public MainWindow() {
         microunde = new Microunde(this);
 
         Button inchide = new Button("Inchide usa");
