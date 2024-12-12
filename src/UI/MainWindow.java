@@ -10,10 +10,10 @@ public class MainWindow extends Frame implements IAfisaj_microunde {
     private Label gatesteLabel = new Label("Gateste OFF!");
     private Label timerLabel = new Label("6");
 
-    private Microunde microunde;
+    private Context context;
 
     public MainWindow() {
-        microunde = new Microunde(this);
+        context = new Context(this);
 
         Button inchide = new Button("Inchide usa");
         Button deschide = new Button("Deschide usa");
@@ -23,9 +23,9 @@ public class MainWindow extends Frame implements IAfisaj_microunde {
         deschide.setBounds(300, 300, 80, 40);
         porneste.setBounds(300, 400, 80, 40);
 
-        usaLabel.setBounds(150, 200, 100, 60);
-        gatesteLabel.setBounds(150, 300, 100, 60);
-        timerLabel.setBounds(150, 400, 100, 60);
+        usaLabel.setBounds(150, 200, 150, 60);
+        gatesteLabel.setBounds(150, 300, 150, 60);
+        timerLabel.setBounds(150, 400, 150, 60);
 
         add(inchide);
         add(deschide);
@@ -42,21 +42,21 @@ public class MainWindow extends Frame implements IAfisaj_microunde {
         inchide.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                microunde.inchideUsa();
+                context.inchideUsa();
             }
         });
 
         deschide.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                microunde.deschideUsa();
+                context.deschideUsa();
             }
         });
 
         porneste.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                microunde.gateste();
+                context.gateste(); //
             }
         });
     }
