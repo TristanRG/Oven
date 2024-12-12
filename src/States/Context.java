@@ -1,7 +1,6 @@
-package UI;
+package States;
 
 import Interfaces.IAfisaj_microunde;
-import States.*;
 
 public class Context {
     private Stare stareCurenta;

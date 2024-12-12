@@ -1,7 +1,5 @@
 package States;
 
-import UI.Context;
-
 public class Stare_usa_deschisa extends Stare {
     private static Stare_usa_deschisa instance = new Stare_usa_deschisa();
 

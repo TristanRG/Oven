@@ -1,5 +1,4 @@
 package States;
-import UI.Context;
 
 public abstract class Stare {
     public abstract void deschideUsa(Context context);

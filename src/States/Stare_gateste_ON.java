@@ -1,7 +1,5 @@
 package States;
 
-import UI.Context;
-
 public class Stare_gateste_ON extends Stare {
     private static Stare_gateste_ON instance = new Stare_gateste_ON();
 
