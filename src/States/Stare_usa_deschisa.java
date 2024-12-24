@@ -11,19 +11,19 @@ public class Stare_usa_deschisa extends Stare {
 
     @Override
     public void deschideUsa(Context context) {
-        System.out.println("Usa este deja deschisa.");
+        System.out.println("Usa este deschisa.");
     }
 
     @Override
     public void inchideUsa(Context context) {
-        context.setStare(Stare_usa_inchisa.getInstance());
         context.setUsaDeschisa(false);
-        context.getAfisaj().setUsaInchisa();
+        context.setStare(Stare_usa_inchisa.getInstance());
+        System.out.println("Usa este inchisa.");
     }
 
     @Override
     public void gateste(Context context) {
-        System.out.println("Inchide usa mai intai!");
+        System.out.println("Inchide usa!");
     }
 
     @Override

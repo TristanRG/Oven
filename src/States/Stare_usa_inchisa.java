@@ -11,24 +11,24 @@ public class Stare_usa_inchisa extends Stare {
 
     @Override
     public void deschideUsa(Context context) {
-        context.setStare(Stare_usa_deschisa.getInstance());
         context.setUsaDeschisa(true);
-        context.getAfisaj().setUsaDeschisa();
+        context.setStare(Stare_usa_deschisa.getInstance());
+        System.out.println("Usa este deschisa.");
     }
 
     @Override
     public void inchideUsa(Context context) {
-        System.out.println("Usa este deja inchisa.");
+        System.out.println("Usa este inchisa.");
     }
 
     @Override
     public void gateste(Context context) {
-        if (!(context.isUsaDeschisa())) {
-            context.setStare(Stare_gateste_ON.getInstance());
+        if (!context.isUsaDeschisa()) {
             context.setGateste(true);
-            context.getAfisaj().setGatesteON();
+            context.setStare(Stare_gateste_ON.getInstance());
             context.startTimer();
-        } else if (context.isUsaDeschisa()) {
+            System.out.println("Gatitul a inceput.");
+        } else {
             System.out.println("Inchide usa mai intai!");
         }
     }

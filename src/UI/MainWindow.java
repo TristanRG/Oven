@@ -2,11 +2,14 @@ package UI;
 
 import Interfaces.IAfisaj_microunde;
 import States.Context;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
-public class MainWindow extends Frame implements IAfisaj_microunde {
+public class MainWindow extends Frame implements IAfisaj_microunde, Observer {
     private Label usaLabel = new Label("Usa inchisa!");
     private Label gatesteLabel = new Label("Gateste OFF!");
     private Label timerLabel = new Label("6");
@@ -14,7 +17,8 @@ public class MainWindow extends Frame implements IAfisaj_microunde {
     private Context context;
 
     public MainWindow() {
-        context = new Context(this);
+        context = new Context();
+        context.subscribe(this);
 
         Button inchide = new Button("Inchide usa");
         Button deschide = new Button("Deschide usa");
@@ -57,9 +61,28 @@ public class MainWindow extends Frame implements IAfisaj_microunde {
         porneste.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                context.gateste(); //
+                context.gateste();
             }
         });
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (arg instanceof Context) {
+            Context context = (Context) arg;
+
+            if (context.isUsaDeschisa()) {
+                setUsaDeschisa();
+            } else {
+                setUsaInchisa();
+            }
+
+            if (context.isGatesteON()) {
+                setGatesteON();
+            } else {
+                setGatesteOFF();
+            }
+        }
     }
 
     @Override

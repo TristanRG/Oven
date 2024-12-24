@@ -1,110 +1,80 @@
 package States;
 
 import Interfaces.IObservable;
-import Interfaces.IObserver;
-import Interfaces.IAfisaj_microunde;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observer;
 
 public class Context implements IObservable {
     private Stare stareCurenta;
-    private IAfisaj_microunde afisaj;
-    private int timer;
-    private final List<IObserver> observers; // List of observers
+    private final List<Observer> observers;
 
-    private boolean gateste;
-    private boolean usaDeschisa;
+    private boolean usaDeschisa = false;
+    private boolean gatesteON = false;
 
-    public Context(IAfisaj_microunde afisaj) {
-        this.afisaj = afisaj;
-        this.stareCurenta = Stare_usa_inchisa.getInstance();
-        this.timer = 6;
+    public Context() {
         this.observers = new ArrayList<>();
-        this.gateste = false;
-        this.usaDeschisa = false;
+        this.stareCurenta = new Stare_usa_inchisa(this);
     }
 
-    public void setStare(Stare stare) {
-        this.stareCurenta = stare;
+    public void setStare(Stare stareNoua) {
+        this.stareCurenta = stareNoua;
         notifyObservers();
     }
 
-    public Stare getStareCurenta() {
-        return stareCurenta;
+    public void deschideUsa() {
+        if (!usaDeschisa) {
+            stareCurenta.deschideUsa();
+            usaDeschisa = true;
+            notifyObservers();
+        }
     }
 
-    public IAfisaj_microunde getAfisaj() {
-        return afisaj;
+    public void inchideUsa() {
+        if (usaDeschisa) {
+            stareCurenta.inchideUsa();
+            usaDeschisa = false;
+            notifyObservers();
+        }
     }
 
-    public int getTimer() {
-        return timer;
+    public void gateste() {
+        if (!gatesteON) {
+            stareCurenta.gateste();
+            gatesteON = true;
+            notifyObservers();
+        }
     }
 
-    public void decrementTimer() {
-        timer--;
+    public void oprireGateste() {
+        if (gatesteON) {
+            gatesteON = false;
+            notifyObservers();
+        }
     }
 
-    public void startTimer() {
-        new Thread(() -> {
-            while (timer > 0 && gateste) {
-                try {
-                    Thread.sleep(1000);
-                    stareCurenta.tickCeas(this);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+    @Override
+    public void subscribe(Observer observer) {
+        observers.add(observer);
     }
 
-    public boolean isGateste() {
-        return gateste;
+    @Override
+    public void unsubscribe(Observer observer) {
+        observers.remove(observer);
     }
 
-    public void setGateste(boolean gateste) {
-        this.gateste = gateste;
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(null, this);
+        }
     }
 
     public boolean isUsaDeschisa() {
         return usaDeschisa;
     }
 
-    public void setUsaDeschisa(boolean usaDeschisa) {
-        this.usaDeschisa = usaDeschisa;
-    }
-
-    public void deschideUsa() {
-        stareCurenta.deschideUsa(this);
-    }
-
-    public void inchideUsa() {
-        stareCurenta.inchideUsa(this);
-    }
-
-    public void gateste() {
-        stareCurenta.gateste(this);
-    }
-
-    public void tickCeas() {
-        stareCurenta.tickCeas(this);
-    }
-
-    @Override
-    public void addObserver(IObserver observer) {
-        observers.add(observer);
-    }
-
-    @Override
-    public void removeObserver(IObserver observer) {
-        observers.remove(observer);
-    }
-
-    @Override
-    public void notifyObservers() {
-        for (IObserver observer : observers) {
-            observer.update(this);
-        }
+    public boolean isGatesteON() {
+        return gatesteON;
     }
 }

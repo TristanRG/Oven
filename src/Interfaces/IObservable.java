@@ -1,7 +1,9 @@
 package Interfaces;
 
+import java.util.Observer;
+
 public interface IObservable {
-    void addObserver(IObserver observer);
-    void removeObserver(IObserver observer);
+    void subscribe(Observer observer);
+    void unsubscribe(Observer observer);
     void notifyObservers();
 }
