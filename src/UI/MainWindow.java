@@ -6,15 +6,18 @@ import States.Context;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Observable;
 import java.util.Observer;
 
 public class MainWindow extends Frame implements IAfisaj_microunde, Observer {
     private Label usaLabel = new Label("Usa inchisa!");
     private Label gatesteLabel = new Label("Gateste OFF!");
-    private Label timerLabel = new Label("6");
+    private Label timerLabel = new Label("10");
 
     private Context context;
+    private Timer tickTimer;
 
     public MainWindow() {
         context = new Context();
@@ -64,24 +67,30 @@ public class MainWindow extends Frame implements IAfisaj_microunde, Observer {
                 context.gateste();
             }
         });
+
+        tickTimer = new Timer();
     }
 
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof Context) {
-            Context context = (Context) arg;
+            Context updatedContext = (Context) arg;
 
-            if (context.isUsaDeschisa()) {
+            if (updatedContext.isUsaDeschisa()) {
                 setUsaDeschisa();
             } else {
                 setUsaInchisa();
             }
 
-            if (context.isGatesteON()) {
+            if (updatedContext.isGatesteON()) {
                 setGatesteON();
+                startTickTimer(updatedContext);
             } else {
                 setGatesteOFF();
+                stopTickTimer();
             }
+
+            updateTimer(updatedContext.getTimer());
         }
     }
 
@@ -103,12 +112,26 @@ public class MainWindow extends Frame implements IAfisaj_microunde, Observer {
     @Override
     public void setGatesteOFF() {
         gatesteLabel.setText("Gateste OFF!");
-        timerLabel.setText("6");
+        timerLabel.setText("0");
     }
 
     @Override
     public void updateTimer(int secunde) {
         timerLabel.setText(String.valueOf(secunde));
+    }
+
+    private void startTickTimer(Context context) {
+        tickTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                context.tickCeas();
+            }
+        }, 1000, 1000);
+    }
+
+    private void stopTickTimer() {
+        tickTimer.cancel();
+        tickTimer = new Timer();
     }
 
     public static void main(String[] args) {

@@ -8,13 +8,13 @@ import java.util.Observer;
 public class Context implements IObservable {
     private Stare stareCurenta;
     private final List<Observer> observers;
-
     private boolean usaDeschisa = false;
     private boolean gatesteON = false;
+    private int timer = 0;
 
     public Context() {
         this.observers = new ArrayList<>();
-        this.stareCurenta = new Stare_usa_inchisa(this);
+        this.stareCurenta = Stare_usa_inchisa.getInstance();
     }
 
     public void setStare(Stare stareNoua) {
@@ -23,34 +23,51 @@ public class Context implements IObservable {
     }
 
     public void deschideUsa() {
-        if (!usaDeschisa) {
-            stareCurenta.deschideUsa();
-            usaDeschisa = true;
-            notifyObservers();
-        }
+        stareCurenta.deschideUsa(this);
     }
 
     public void inchideUsa() {
-        if (usaDeschisa) {
-            stareCurenta.inchideUsa();
-            usaDeschisa = false;
-            notifyObservers();
-        }
+        stareCurenta.inchideUsa(this);
     }
 
     public void gateste() {
-        if (!gatesteON) {
-            stareCurenta.gateste();
-            gatesteON = true;
-            notifyObservers();
+        stareCurenta.gateste(this);
+    }
+
+    public void tickCeas() {
+        stareCurenta.tickCeas(this);
+    }
+
+    public void setUsaDeschisa(boolean usaDeschisa) {
+        this.usaDeschisa = usaDeschisa;
+        notifyObservers();
+    }
+
+    public boolean isUsaDeschisa() {
+        return usaDeschisa;
+    }
+
+    public void setGateste(boolean gatesteON) {
+        this.gatesteON = gatesteON;
+        notifyObservers();
+    }
+
+    public boolean isGatesteON() {
+        return gatesteON;
+    }
+
+    public void startTimer() {
+        timer = 10;
+    }
+
+    public void decrementTimer() {
+        if (timer > 0) {
+            timer--;
         }
     }
 
-    public void oprireGateste() {
-        if (gatesteON) {
-            gatesteON = false;
-            notifyObservers();
-        }
+    public int getTimer() {
+        return timer;
     }
 
     @Override
@@ -68,13 +85,5 @@ public class Context implements IObservable {
         for (Observer observer : observers) {
             observer.update(null, this);
         }
-    }
-
-    public boolean isUsaDeschisa() {
-        return usaDeschisa;
-    }
-
-    public boolean isGatesteON() {
-        return gatesteON;
     }
 }

@@ -11,17 +11,17 @@ public class Stare_gateste_ON extends Stare {
 
     @Override
     public void deschideUsa(Context context) {
-        System.out.println("Nu poti deschide usa.");
+        System.out.println("Nu poti deschide usa in timp ce gatesti.");
     }
 
     @Override
     public void inchideUsa(Context context) {
-        System.out.println("Usa este inchisa.");
+        System.out.println("Usa este deja inchisa.");
     }
 
     @Override
     public void gateste(Context context) {
-        System.out.println("Cuptorul gateste.");
+        System.out.println("Cuptorul este deja in functiune.");
     }
 
     @Override

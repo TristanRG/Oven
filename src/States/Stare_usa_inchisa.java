@@ -11,30 +11,32 @@ public class Stare_usa_inchisa extends Stare {
 
     @Override
     public void deschideUsa(Context context) {
-        context.setUsaDeschisa(true);
-        context.setStare(Stare_usa_deschisa.getInstance());
-        System.out.println("Usa este deschisa.");
+        if (!context.isUsaDeschisa()) {
+            context.setUsaDeschisa(true);
+            context.setStare(Stare_usa_deschisa.getInstance());
+            System.out.println("Usa a fost deschisa.");
+        }
     }
 
     @Override
     public void inchideUsa(Context context) {
-        System.out.println("Usa este inchisa.");
+        System.out.println("Usa este deja inchisa.");
     }
 
     @Override
     public void gateste(Context context) {
-        if (!context.isUsaDeschisa()) {
+        if (!context.isUsaDeschisa() && !context.isGatesteON()) {
             context.setGateste(true);
             context.setStare(Stare_gateste_ON.getInstance());
             context.startTimer();
             System.out.println("Gatitul a inceput.");
         } else {
-            System.out.println("Inchide usa mai intai!");
+            System.out.println("Inchide usa inainte de a gati.");
         }
     }
 
     @Override
     public void tickCeas(Context context) {
-        System.out.println("Timerul nu este activ.");
+        System.out.println("Timerul nu poate fi activ in acest mod.");
     }
 }
