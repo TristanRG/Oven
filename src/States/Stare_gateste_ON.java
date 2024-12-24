@@ -11,7 +11,9 @@ public class Stare_gateste_ON extends Stare {
 
     @Override
     public void deschideUsa(Context context) {
-        System.out.println("Nu poti deschide usa.");
+
+        //starea
+        // notificare observatori System.out.println("Nu poti deschide usa.");
     }
 
     @Override

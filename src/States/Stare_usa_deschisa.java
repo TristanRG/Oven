@@ -1,7 +1,7 @@
 package States;
 
 public class Stare_usa_deschisa extends Stare {
-    private static Stare_usa_deschisa instance = new Stare_usa_deschisa();
+    private static final Stare_usa_deschisa instance = new Stare_usa_deschisa();
 
     private Stare_usa_deschisa() {}
 
@@ -11,18 +11,19 @@ public class Stare_usa_deschisa extends Stare {
 
     @Override
     public void deschideUsa(Context context) {
-        System.out.println("Usa este deschisa.");
+        System.out.println("Usa este deja deschisa.");
     }
 
     @Override
     public void inchideUsa(Context context) {
         context.setStare(Stare_usa_inchisa.getInstance());
+        context.setUsaDeschisa(false);
         context.getAfisaj().setUsaInchisa();
     }
 
     @Override
     public void gateste(Context context) {
-        System.out.println("Inchide usa!");
+        System.out.println("Inchide usa mai intai!");
     }
 
     @Override
