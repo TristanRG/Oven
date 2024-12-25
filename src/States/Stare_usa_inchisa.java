@@ -11,10 +11,12 @@ public class Stare_usa_inchisa extends Stare {
 
     @Override
     public void deschideUsa(Context context) {
-        if (!context.isUsaDeschisa()) {
+        if (!context.isUsaDeschisa() && !context.isGatesteON()) {
             context.setUsaDeschisa(true);
             context.setStare(Stare_usa_deschisa.getInstance());
             System.out.println("Usa a fost deschisa.");
+        } else if (context.isGatesteON()) {
+            System.out.println("Nu poti deschide usa in timp ce gatesti.");
         }
     }
 

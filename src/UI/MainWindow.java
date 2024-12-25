@@ -18,6 +18,7 @@ public class MainWindow extends Frame implements IAfisaj_microunde, Observer {
 
     private Context context;
     private Timer tickTimer;
+    private TimerTask tickTask;
 
     public MainWindow() {
         context = new Context();
@@ -88,6 +89,10 @@ public class MainWindow extends Frame implements IAfisaj_microunde, Observer {
             } else {
                 setGatesteOFF();
                 stopTickTimer();
+
+                if (!updatedContext.isUsaDeschisa() && !updatedContext.isGatesteON()) {
+                    updateTimer(10);
+                }
             }
 
             updateTimer(updatedContext.getTimer());
@@ -112,7 +117,6 @@ public class MainWindow extends Frame implements IAfisaj_microunde, Observer {
     @Override
     public void setGatesteOFF() {
         gatesteLabel.setText("Gateste OFF!");
-        timerLabel.setText("0");
     }
 
     @Override
@@ -121,17 +125,24 @@ public class MainWindow extends Frame implements IAfisaj_microunde, Observer {
     }
 
     private void startTickTimer(Context context) {
-        tickTimer.scheduleAtFixedRate(new TimerTask() {
+        stopTickTimer();
+
+        tickTask = new TimerTask() {
             @Override
             public void run() {
-                context.tickCeas();
+                if (context.isGatesteON()) {
+                    context.tickCeas();
+                }
             }
-        }, 1000, 1000);
+        };
+
+        tickTimer.scheduleAtFixedRate(tickTask, 1000, 1000);
     }
 
     private void stopTickTimer() {
-        tickTimer.cancel();
-        tickTimer = new Timer();
+        if (tickTask != null) {
+            tickTask.cancel();
+        }
     }
 
     public static void main(String[] args) {

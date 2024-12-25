@@ -57,12 +57,16 @@ public class Context implements IObservable {
     }
 
     public void startTimer() {
-        timer = 10;
+        if (timer == 0) {
+            timer = 10;
+        }
+        notifyObservers();
     }
 
     public void decrementTimer() {
         if (timer > 0) {
             timer--;
+            notifyObservers();
         }
     }
 
