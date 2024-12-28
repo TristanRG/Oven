@@ -29,7 +29,6 @@ public class Stare_usa_deschisa extends Stare {
             context.setGateste(true);
             context.setStare(Stare_gateste_ON.getInstance());
             context.startTimer();
-            System.out.println("Gatitul a inceput.");
         } else {
             System.out.println("Nu se poate incepe gatitul cu usa deschisa.");
         }

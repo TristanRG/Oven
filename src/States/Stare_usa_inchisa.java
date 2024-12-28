@@ -14,7 +14,6 @@ public class Stare_usa_inchisa extends Stare {
         if (!context.isUsaDeschisa() && !context.isGatesteON()) {
             context.setUsaDeschisa(true);
             context.setStare(Stare_usa_deschisa.getInstance());
-            System.out.println("Usa a fost deschisa.");
         } else if (context.isGatesteON()) {
             System.out.println("Nu poti deschide usa in timp ce gatesti.");
         }
@@ -31,7 +30,6 @@ public class Stare_usa_inchisa extends Stare {
             context.setGateste(true);
             context.setStare(Stare_gateste_ON.getInstance());
             context.startTimer();
-            System.out.println("Gatitul a inceput.");
         } else {
             System.out.println("Inchide usa inainte de a gati.");
         }
